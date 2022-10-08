@@ -9,14 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 public class JankenController {
 
-  @GetMapping("/janken")
-  public String janken() {
-    return "janken.html";
-  }
-
   @PostMapping("/janken")
   public String janken(@PathVariable String name, ModelMap model) {
-    model.addAttribute("yourName", name);
+    model.addAttribute("name", name);
     return "janken.html";
   }
 }
