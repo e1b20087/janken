@@ -16,7 +16,7 @@ public class JankenController {
   }
 
   @PostMapping("/janken")
-  public String janken(@PathVariable String name, ModelMap model) {
+  public String janken(@RequestParam String name, ModelMap model) {
     model.addAttribute("name", name);
     return "janken.html";
   }
