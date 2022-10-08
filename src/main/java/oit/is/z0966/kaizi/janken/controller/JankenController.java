@@ -87,6 +87,6 @@ public class JankenController {
     model.addAttribute("hand", hand);
     model.addAttribute("aihand", aihand);
     model.addAttribute("result", result);
-    return "jankengame.html";
+    return "janken.html";
   }
 }
