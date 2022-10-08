@@ -8,7 +8,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 
 public class JankenController {
-  @PostMapping
+
+  @GetMapping("/janken")
+  public String janken() {
+    return "janken.html";
+  }
+
+  @PostMapping("/janken")
   public String janken(@PathVariable String name, ModelMap model) {
     model.addAttribute("yourName", name);
     return "janken.html";
