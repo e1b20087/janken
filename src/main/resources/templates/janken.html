@@ -9,14 +9,13 @@
 <body>
   <h1>Janken GAME!</h1>
   <p>
-  <div>
+  <div th:if="${yourName}">
     <!--yourName変数が渡された場合のみdivタグの中身を表示する-->
     Hi![[${name}]]
   </div>
   </p>
   <p>
   <div>
-
     <a href="/jankengame?hand=Gu">ぐー</a>
     <a href="/jankengame?hand=Thoki">ちょき</a>
     <a href="/jankengame?hand=Pa">ぱー</a>
