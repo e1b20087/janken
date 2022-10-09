@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Janken GAME!</title>
+</head>
+
+<body>
+  <h1>Janken GAME!</h1>
+  <p>
+    [[${name}]]
+  <div>
+    <a href="/jankengame?hand=Gu">ぐー</a>
+    <a href="/jankengame?hand=Thoki">ちょき</a>
+    <a href="/jankengame?hand=Pa">ぱー</a>
+  </div>
+  </p>
+  <div th:if="${hand}">
+    <p>
+      あなたの手 [[${hand}]]
+    </p>
+    <p>
+      相手の手 [[${aihand}]]
+    </p>
+    <p>
+      結果 [[${result}]]
+    </p>
+  </div>
+  </p>
+</body>
+
+</html>
