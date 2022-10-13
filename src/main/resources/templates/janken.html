@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+</html>
+
 <html>
 
 <head>
@@ -7,9 +11,23 @@
 </head>
 
 <body>
+  <div><a href="/logout">ログアウト</a></div>
   <h1>Janken GAME!</h1>
+
+  <div th:if="${room}">
+    エントリー
+    <ul>
+      <!--eachは所謂for each．この場合roomオブジェクトのusersフィールドにあるすべてのデータを一通り表示する
+        thが指定されているので[]が不要になる-->
+      <li th:each="user : ${room.users}">[[${user}]]</li>
+    </ul>
+  </div>
+
   <p>
     [[${name}]]
+  <div th:if="${room.users}">
+    Hi <span sec:authentication="name"></span>
+  </div>
   <div>
     <a href="/jankengame?hand=Gu">ぐー</a>
     <a href="/jankengame?hand=Thoki">ちょき</a>
