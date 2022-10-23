@@ -29,18 +29,26 @@ public class JankenAuthConfiguration {
     // このときパスワードはBCryptでハッシュ化されている．
     // ハッシュ化されたパスワードを得るには，この授業のbashターミナルで下記のように末尾にユーザ名とパスワードを指定すると良い(要VPN)
     // $ sshrun htpasswd -nbBC 10 user1 p@ss
+    // pass
     UserDetails user1 = users
         .username("user1")
-        .password("$2y$10$p2GX.nOKcPGxtiuID9xFO.abG12WjFFQfqv/0lSFe2trJlR/ERs7W")
+        .password("$2y$10$TJ9qYrMg7izd1TKIZaSXn.zeyAVUPNJ8uF9UTmesFpalFLy2qR9n.")
         .roles("USER")
         .build();
+    // p@ss
     UserDetails user2 = users
         .username("user2")
-        .password("$2y$10$4aAdiKeyQ4Jqw5xCJVGl..vUCcwGf3zTQKUx2amSFwb6CqKKKLJNi")
+        .password("$2y$10$7yI79tmNFXYxj883THTRb.3ts2FfGAf3nVKqBdZqWzZtKMWETWsAe")
+        .roles("USER")
+        .build();
+    // isdev
+    UserDetails ほんだ = users
+        .username("ほんだ")
+        .password("$2y$10$uti2jajIg/zPGpZV4.DPieD7q56R10u/YIrgOuhmkF8udFy7MptXq")
         .roles("USER")
         .build();
     // 生成したユーザをImMemoryUserDetailsManagerに渡す（いくつでも良い）
-    return new InMemoryUserDetailsManager(user1, user2);
+    return new InMemoryUserDetailsManager(user1, user2, ほんだ);
   }
 
   /**
@@ -62,7 +70,16 @@ public class JankenAuthConfiguration {
         .mvcMatchers("/janken/**").authenticated();
 
     http.logout().logoutSuccessUrl("/"); // ログアウト時は "http://localhost:8000/" に戻る
+
+    /**
+     * 以下2行はh2-consoleを利用するための設定なので，開発が完了したらコメントアウトすることが望ましい
+     * CSRFがONになっているとフォームが対応していないためアクセスできない
+     * HTTPヘッダのX-Frame-OptionsがDENYになるとiframeでlocalhostでのアプリが使えなくなるので，H2DBのWebクライアントのためだけにdisableにする必要がある
+     */
+    http.csrf().disable();
+    http.headers().frameOptions().disable();
     return http.build();
+
   }
 
   /**
