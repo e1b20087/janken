@@ -14,36 +14,38 @@
   <div><a href="/logout">ログアウト</a></div>
   <h1>Janken GAME!</h1>
 
-  <div th:if="${room}">
+  <!-- <div th:if="${room}">
     エントリー
-    <ul>
-      <!--eachは所謂for each．この場合roomオブジェクトのusersフィールドにあるすべてのデータを一通り表示する
+    <ul>-->
+  <!--eachは所謂for each．この場合roomオブジェクトのusersフィールドにあるすべてのデータを一通り表示する
         thが指定されているので[]が不要になる-->
-      <li th:each="user : ${room.users}">[[${user}]]</li>
+  <!-- <li th:each="user : ${room.users}">[[${user}]]</li>
     </ul>
-  </div>
+  </div>-->
 
   <p>
     [[${name}]]
   <div th:if="${room.users}">
     Hi <span sec:authentication="name"></span>
   </div>
-  <div>
-    <a href="/jankengame?hand=Gu">ぐー</a>
-    <a href="/jankengame?hand=Thoki">ちょき</a>
-    <a href="/jankengame?hand=Pa">ぱー</a>
-  </div>
+
+  <p th:if="${Users}">
+  <h1>エントリー</h1>
+  <ul>
+    <li th:each="users,stat:${Users}"><a th:href="@{/match(id=${users.id})}"> [[${users.name}]]</a></li>
+  </ul>
   </p>
-  <div th:if="${hand}">
-    <p>
-      あなたの手 [[${hand}]]
-    </p>
-    <p>
-      相手の手 [[${aihand}]]
-    </p>
-    <p>
-      結果 [[${result}]]
-    </p>
+
+  <p th:if="${MUsers}">
+  <h1>試合結果</h1>
+  <div th:each="match,stat:${Matchs}">
+    <tr>
+      <td>id:[[${match.id}]]</td>
+      <td>user1:[[${match.user1}]]</td>
+      <td>user2:[[${match.user2}]]</td>
+      <td>user1の手[[${match.user1Hand}]]</td>
+      <td>user2の手[[${match.user2Hand}]]</td>
+    </tr>
   </div>
   </p>
 </body>
