@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+</html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Janken GAME!</title>
+
+  <script>
+    window.onload = function () {
+      var sse = new EventSource('/wait/sse');
+      sse.onmessage = function (event) {
+        console.log("sse.onmessage")
+        var matches_list = JSON.parse(event.data);//JSONオブジェクトとしてparse
+        var matches_table = "";
+
+        for (var i = 0; i < matches_list.length; i++) {
+          var bgn_tr = "<tr>";
+          var end_tr = "</tr>";
+          var idx = "<td>" + matches_list[i].id + "</td>";
+          var m_name1 = "<td>" + matches_list[i].user1 + "</td>";
+          var m_name2 = "<td>" + matches_list[i].user2 + "</td>";
+          var m_hand1 = "<td>" + matches_list[i].user1Hand + "</td>";
+          var m_hand2 = "<td>" + matches_list[i].user2Hand + "</td>";
+          matches_table = matches_table + bgn_tr + idx + m_name1 + m_name2 + m_hand1 + m_hand2 + end_tr;
+        }
+        console.log(matches_table);
+
+        var tbody = document.getElementById("ma");
+        tbody.innerHTML = matches_table;
+      }
+
+    }
+
+  </script>
+</head>
+
+<body>
+  <h1>相手の手を待ってます</h1>
+
+  <p>Hi <span sec:authentication="name"></span></p>
+
+  <div th:if="${inmatch}">
+    <h1>結果</h1>
+    <tbody id="ma">
+
+    </tbody>
+    <a href="/janken">もどる</a>
+  </div>
+  <a href="/janken">もどる</a>
+</body>
+
+</html>

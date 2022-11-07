@@ -8,10 +8,10 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
-public interface MatchMapper {
+public interface MatchInfoMapper {
 
-  @Select("SELECT * from matches where isactive = true")
-  ArrayList<Match> selectByistrue();
+  // @Select("SELECT id,name from users where id = #{id}")
+  // Match selectById(int id);
 
   /**
    * #{userName}などはinsertの引数にあるChamberクラスのフィールドを表しています 引数に直接String
@@ -39,13 +39,17 @@ public interface MatchMapper {
    *
    *
    */
-  @Insert("INSERT INTO matches (user1,user2,user1Hand,user2Hand) VALUES  (#{user1},#{user2},#{user1Hand},#{user2Hand});")
+  @Insert("INSERT INTO matchinfo (user1,user2,user1Hand,isActive) VALUES  (#{user1},#{user2},#{user1Hand},#{isActive});")
   @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-  void insertMatch(Match matches);
+  void insertMatchinfo(MatchInfo matchinfo);
+
   // insertMatch
 
-  @Select("SELECT * from matches")
-  ArrayList<Match> selectAllBymatch();
+  @Select("SELECT * from matchinfo where isactive = true")
+  ArrayList<Match> selecttrueBymatchinfo();
+
+  @Select("SELECT * from matchinfo where user2 = #{id}")
+  MatchInfo selectallidBymatchinfo(int id);
 
   /**
    * DBのカラム名とjavaクラスのフィールド名が同じ場合はそのまま代入してくれる（大文字小文字の違いは無視される）

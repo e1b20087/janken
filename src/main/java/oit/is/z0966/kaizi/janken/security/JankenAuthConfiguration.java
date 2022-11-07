@@ -88,6 +88,8 @@ public class JankenAuthConfiguration {
 
   }
 
+
+
   /**
    *
    * UserBuilder users = User.builder();で利用するPasswordEncoderを指定する．
